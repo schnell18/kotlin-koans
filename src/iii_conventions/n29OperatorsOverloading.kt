@@ -20,12 +20,23 @@ fun todoTask29(): Nothing = TODO(
     })
 
 fun task29_1(today: MyDate): MyDate {
-    todoTask29()
-//    return today + YEAR + WEEK
+    return today + YEAR + WEEK
+}
+
+private operator fun MyDate.plus(timeInterval: RepeatedTimeInterval): MyDate {
+    return when(timeInterval.interval) {
+        YEAR -> this.copy(year = this.year + timeInterval.repeat)
+        DAY -> this.nextDay(timeInterval.repeat)
+        WEEK -> this.nextDay(7 * timeInterval.repeat)
+    }
+}
+
+private operator fun MyDate.plus(timeInterval: TimeInterval): MyDate {
+    return this.plus(RepeatedTimeInterval(timeInterval))
 }
 
 fun task29_2(today: MyDate): MyDate {
-    todoTask29()
-//    return today + YEAR * 2 + WEEK * 3 + DAY * 5
+    return today + YEAR * 2 + WEEK * 3 + DAY * 5
 }
+
 

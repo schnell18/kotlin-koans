@@ -22,6 +22,4 @@ class N25ComparisonKtTest {
         assertTrue("The date ${first.s} should be after ${second.s}", first > second)
     }
 
-    /* If you declare 'compareTo' as an extension function, remove this one to make the code compile */
-    operator fun MyDate.compareTo(other: MyDate): Int = todoTask25()
 }

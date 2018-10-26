@@ -2,6 +2,8 @@ package vi_generics
 
 import util.TODO
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 fun task41(): Nothing = TODO(
     """
@@ -19,12 +21,45 @@ fun task41(): Nothing = TODO(
         }
 )
 
-fun List<String>.partitionWordsAndLines(): Pair<List<String>, List<String>> {
-    task41()
-//    return partitionTo(ArrayList<String>(), ArrayList()) { s -> !s.contains(" ") }
+fun <T, C: MutableCollection<T>> Collection<T>.partitionTo(first: C, second: C, predicate: (T) -> Boolean): Pair<C, C> {
+    for (s in this) {
+        if (predicate(s)) {
+            first.add(s)
+        }
+        else {
+            second.add(s)
+        }
+    }
+    return Pair(first, second)
 }
 
+fun List<String>.partitionWordsAndLines(): Pair<List<String>, List<String>> {
+    fun partitionTo(list: ArrayList<String>, arrayList: ArrayList<String>, predicate: (String) -> Boolean): Pair<List<String>, List<String>> {
+        for (s in this) {
+           if (predicate(s)) {
+               list.add(s)
+           }
+           else {
+               arrayList.add(s)
+           }
+        }
+        return Pair(list, arrayList)
+    }
+    return partitionTo(ArrayList(), ArrayList()) { s -> !s.contains(" ") }
+}
+
+
 fun Set<Char>.partitionLettersAndOtherSymbols(): Pair<Set<Char>, Set<Char>> {
-    task41()
-//    return partitionTo(HashSet<Char>(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
+    fun partitionTo(set1: HashSet<Char>, set2: HashSet<Char>, predicate: (Char) -> Boolean): Pair<Set<Char>, Set<Char>> {
+        for (c in this) {
+            if (predicate(c)) {
+                set1.add(c)
+            }
+            else {
+                set2.add(c)
+            }
+        }
+        return Pair(set1, set2)
+    }
+    return partitionTo(HashSet(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
 }
